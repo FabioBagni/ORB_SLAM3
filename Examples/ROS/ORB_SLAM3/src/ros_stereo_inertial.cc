@@ -255,19 +255,22 @@ void ImageGrabber::SyncWithImu()
         }
       }
       mpImuGb->mBufMutex.unlock();
-      if(mbClahe)
+      if(!vImuMeas.empty())
       {
-        mClahe->apply(imLeft,imLeft);
-        mClahe->apply(imRight,imRight);
-      }
+        if(mbClahe)
+        {
+          mClahe->apply(imLeft,imLeft);
+          mClahe->apply(imRight,imRight);
+        }
 
-      if(do_rectify)
-      {
-        cv::remap(imLeft,imLeft,M1l,M2l,cv::INTER_LINEAR);
-        cv::remap(imRight,imRight,M1r,M2r,cv::INTER_LINEAR);
-      }
+        if(do_rectify)
+        {
+          cv::remap(imLeft,imLeft,M1l,M2l,cv::INTER_LINEAR);
+          cv::remap(imRight,imRight,M1r,M2r,cv::INTER_LINEAR);
+        }
 
-      mpSLAM->TrackStereo(imLeft,imRight,tImLeft,vImuMeas);
+        mpSLAM->TrackStereo(imLeft,imRight,tImLeft,vImuMeas);
+      }
 
       std::chrono::milliseconds tSleep(1);
       std::this_thread::sleep_for(tSleep);
