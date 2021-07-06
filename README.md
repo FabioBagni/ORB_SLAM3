@@ -144,14 +144,19 @@ Tested with ROS Melodic and ubuntu 18.04.
 and add at the end the following line. Replace PATH by the folder where you cloned ORB_SLAM3:
 
   ```
-  export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:PATH/ORB_SLAM3/Examples/ROS
+  export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:<PATH>/ORB_SLAM3/Examples/ROS
+  export ORB_SLAM_DIR=<PATH>/ORB_SLAM3
   ```
   
-2. Execute `build_ros.sh` script:
+Alternatively run every time before compile script:
+  ```
+  source setup.sh
+  ```
+  
+2. Relaunch compile script `build.sh`:
 
   ```
-  chmod +x build_ros.sh
-  ./build_ros.sh
+  ./build.sh
   ```
   
 ### Running Monocular Node
