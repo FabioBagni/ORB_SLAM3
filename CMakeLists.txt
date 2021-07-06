@@ -112,7 +112,6 @@ if(BUILD_EXAMPLES)
   message("${Esc}[1;32m" "-- Building examples" "${Esc}[m" )
 
   # RGB-D examples
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/RGB-D)
 
   add_executable(rgbd_tum
   Examples/RGB-D/rgbd_tum.cc)
@@ -120,7 +119,6 @@ if(BUILD_EXAMPLES)
 
 
   # Stereo examples
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Stereo)
 
   add_executable(stereo_kitti
   Examples/Stereo/stereo_kitti.cc)
@@ -135,7 +133,6 @@ if(BUILD_EXAMPLES)
   target_link_libraries(stereo_tum_vi ${PROJECT_NAME})
 
   # Monocular examples
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Monocular)
 
   add_executable(mono_tum
   Examples/Monocular/mono_tum.cc)
@@ -154,7 +151,6 @@ if(BUILD_EXAMPLES)
   target_link_libraries(mono_tum_vi ${PROJECT_NAME})
 
   # Monocular-Inertial examples
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Monocular-Inertial)
 
   add_executable(mono_inertial_euroc
   Examples/Monocular-Inertial/mono_inertial_euroc.cc)
@@ -165,7 +161,6 @@ if(BUILD_EXAMPLES)
   target_link_libraries(mono_inertial_tum_vi ${PROJECT_NAME})
 
   # Stereo-Inertial examples
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Stereo-Inertial)
 
   add_executable(stereo_inertial_euroc
   Examples/Stereo-Inertial/stereo_inertial_euroc.cc)
