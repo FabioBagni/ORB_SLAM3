@@ -1,0 +1,7 @@
+<launch>
+
+    <remap to="/camera/left/image_raw" from="/camera/image_raw"/>
+
+    <node name="orb_slam3_euroc" pkg="ORB_SLAM3" type="Mono_Inertial" args="/home/fabio/workspace/ORB_SLAM3/Vocabulary/ORBvoc.txt /home/fabio/workspace/ORB_SLAM3/Examples/ROS/ORB_SLAM3/orb_slam3_configs/orb_vi.yaml false" output="screen"/>
+
+</launch>

@@ -1,0 +1,9 @@
+<launch>
+
+    <remap from="/camera/left/image_raw" to="/realsense2_id0_stereo/left"/>
+    <remap from="/camera/right/image_raw" to="/realsense2_id0_stereo/right"/>
+    <remap from="/imu" to="/realsense2_id0_imu"/>
+
+    <node name="orb_slam3_euroc" pkg="ORB_SLAM3" type="Stereo_Inertial" args="$(env ORB_SLAM_DIR)/Vocabulary/ORBvoc.txt $(env ORB_SLAM_DIR)/launch/d455_stereo_imu/orb_si.yaml false false" output="screen"/>
+
+</launch>
