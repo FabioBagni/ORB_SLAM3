@@ -97,77 +97,88 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   ${PROJECT_SOURCE_DIR}/include/CameraModels
   ${EIGEN3_INCLUDE_DIR}
   ${Pangolin_INCLUDE_DIRS}
-)
-
-
+  )
+  
+  
 ### Build examples
+  
+if(NOT DEFINED BUILD_EXAMPLES)
+  set(BUILD_EXAMPLES True)
+endif()
 
-# RGB-D examples
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/RGB-D)
+if(BUILD_EXAMPLES)
 
-add_executable(rgbd_tum
-Examples/RGB-D/rgbd_tum.cc)
-target_link_libraries(rgbd_tum ${PROJECT_NAME})
+  string(ASCII 27 Esc)
+  message("${Esc}[1;32m" "-- Building examples" "${Esc}[m" )
+
+  # RGB-D examples
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/RGB-D)
+
+  add_executable(rgbd_tum
+  Examples/RGB-D/rgbd_tum.cc)
+  target_link_libraries(rgbd_tum ${PROJECT_NAME})
 
 
-# Stereo examples
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Stereo)
+  # Stereo examples
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Stereo)
 
-add_executable(stereo_kitti
-Examples/Stereo/stereo_kitti.cc)
-target_link_libraries(stereo_kitti ${PROJECT_NAME})
+  add_executable(stereo_kitti
+  Examples/Stereo/stereo_kitti.cc)
+  target_link_libraries(stereo_kitti ${PROJECT_NAME})
 
-add_executable(stereo_euroc
-Examples/Stereo/stereo_euroc.cc)
-target_link_libraries(stereo_euroc ${PROJECT_NAME})
+  add_executable(stereo_euroc
+  Examples/Stereo/stereo_euroc.cc)
+  target_link_libraries(stereo_euroc ${PROJECT_NAME})
 
-add_executable(stereo_tum_vi
-Examples/Stereo/stereo_tum_vi.cc)
-target_link_libraries(stereo_tum_vi ${PROJECT_NAME})
+  add_executable(stereo_tum_vi
+  Examples/Stereo/stereo_tum_vi.cc)
+  target_link_libraries(stereo_tum_vi ${PROJECT_NAME})
 
-# Monocular examples
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Monocular)
+  # Monocular examples
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Monocular)
 
-add_executable(mono_tum
-Examples/Monocular/mono_tum.cc)
-target_link_libraries(mono_tum ${PROJECT_NAME})
+  add_executable(mono_tum
+  Examples/Monocular/mono_tum.cc)
+  target_link_libraries(mono_tum ${PROJECT_NAME})
 
-add_executable(mono_kitti
-Examples/Monocular/mono_kitti.cc)
-target_link_libraries(mono_kitti ${PROJECT_NAME})
+  add_executable(mono_kitti
+  Examples/Monocular/mono_kitti.cc)
+  target_link_libraries(mono_kitti ${PROJECT_NAME})
 
-add_executable(mono_euroc
-Examples/Monocular/mono_euroc.cc)
-target_link_libraries(mono_euroc ${PROJECT_NAME})
+  add_executable(mono_euroc
+  Examples/Monocular/mono_euroc.cc)
+  target_link_libraries(mono_euroc ${PROJECT_NAME})
 
-add_executable(mono_tum_vi
-Examples/Monocular/mono_tum_vi.cc)
-target_link_libraries(mono_tum_vi ${PROJECT_NAME})
+  add_executable(mono_tum_vi
+  Examples/Monocular/mono_tum_vi.cc)
+  target_link_libraries(mono_tum_vi ${PROJECT_NAME})
 
-# Monocular-Inertial examples
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Monocular-Inertial)
+  # Monocular-Inertial examples
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Monocular-Inertial)
 
-add_executable(mono_inertial_euroc
-Examples/Monocular-Inertial/mono_inertial_euroc.cc)
-target_link_libraries(mono_inertial_euroc ${PROJECT_NAME})
+  add_executable(mono_inertial_euroc
+  Examples/Monocular-Inertial/mono_inertial_euroc.cc)
+  target_link_libraries(mono_inertial_euroc ${PROJECT_NAME})
 
-add_executable(mono_inertial_tum_vi
-Examples/Monocular-Inertial/mono_inertial_tum_vi.cc)
-target_link_libraries(mono_inertial_tum_vi ${PROJECT_NAME})
+  add_executable(mono_inertial_tum_vi
+  Examples/Monocular-Inertial/mono_inertial_tum_vi.cc)
+  target_link_libraries(mono_inertial_tum_vi ${PROJECT_NAME})
 
-# Stereo-Inertial examples
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Stereo-Inertial)
+  # Stereo-Inertial examples
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Stereo-Inertial)
 
-add_executable(stereo_inertial_euroc
-Examples/Stereo-Inertial/stereo_inertial_euroc.cc)
-target_link_libraries(stereo_inertial_euroc ${PROJECT_NAME})
+  add_executable(stereo_inertial_euroc
+  Examples/Stereo-Inertial/stereo_inertial_euroc.cc)
+  target_link_libraries(stereo_inertial_euroc ${PROJECT_NAME})
 
-add_executable(stereo_inertial_tum_vi
-Examples/Stereo-Inertial/stereo_inertial_tum_vi.cc)
-target_link_libraries(stereo_inertial_tum_vi ${PROJECT_NAME})
+  add_executable(stereo_inertial_tum_vi
+  Examples/Stereo-Inertial/stereo_inertial_tum_vi.cc)
+  target_link_libraries(stereo_inertial_tum_vi ${PROJECT_NAME})
 
-find_package(roscpp REQUIRED)
+  find_package(roscpp REQUIRED)
 
-if(roscpp_FOUND)
-  add_subdirectory(Examples/ROS/ORB_SLAM3)
+  if(roscpp_FOUND AND DEFINED ENV{ORB_SLAM_DIR})
+    add_subdirectory(Examples/ROS/ORB_SLAM3)
+  endif()
+
 endif()
