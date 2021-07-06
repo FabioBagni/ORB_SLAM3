@@ -7,13 +7,13 @@ ENDIF()
 
 MESSAGE("Build type: " ${CMAKE_BUILD_TYPE})
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall   -O3")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall   -O3")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-deprecated -Wno-deprecated-declarations   -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated -Wno-deprecated-declarations  -O3")
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native")
 
-# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-deprecated -O3 -march=native ")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-deprecated -O3 -march=native")
+# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wno-deprecated -O3 -march=native ")
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-deprecated -O3 -march=native")
 
 # Check C++11 or C++0x support
 include(CheckCXXCompilerFlag)
@@ -48,14 +48,6 @@ find_package(Eigen3 3.1.0 REQUIRED)
 find_package(Pangolin REQUIRED)
 find_package(realsense2)
 
-include_directories(
-${PROJECT_SOURCE_DIR}
-${PROJECT_SOURCE_DIR}/include
-${PROJECT_SOURCE_DIR}/include/CameraModels
-${EIGEN3_INCLUDE_DIR}
-${Pangolin_INCLUDE_DIRS}
-)
-
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
 add_library(${PROJECT_NAME} SHARED
@@ -85,46 +77,26 @@ src/CameraModels/KannalaBrandt8.cpp
 src/OptimizableTypes.cpp
 src/MLPnPsolver.cpp
 src/TwoViewReconstruction.cc
-#include/System.h
-#include/Tracking.h
-#include/LocalMapping.h
-#include/LoopClosing.h
-#include/ORBextractor.h
-#include/ORBmatcher.h
-#include/FrameDrawer.h
-#include/Converter.h
-#include/MapPoint.h
-#include/KeyFrame.h
-#include/Atlas.h
-#include/Map.h
-#include/MapDrawer.h
-#include/Optimizer.h
-#include/Frame.h
-#include/KeyFrameDatabase.h
-#include/Sim3Solver.h
-#include/Initializer.h
-#include/Viewer.h
-#include/ImuTypes.h
-#include/G2oTypes.h
-#include/CameraModels/GeometricCamera.h
-#include/CameraModels/Pinhole.h
-#include/CameraModels/KannalaBrandt8.h
-#include/OptimizableTypes.h
-#include/MLPnPsolver.h
-#include/TwoViewReconstruction.h
-#include/Config.h
 )
 
 add_subdirectory(Thirdparty/g2o)
+add_subdirectory(Thirdparty/DBoW2)
 
 target_link_libraries(${PROJECT_NAME}
 ${OpenCV_LIBS}
 ${EIGEN3_LIBS}
 ${Pangolin_LIBRARIES}
-${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
-${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
+DBoW2
+g2o
 -lboost_serialization
 -lcrypto
+)
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+  ${PROJECT_SOURCE_DIR}/include
+  ${PROJECT_SOURCE_DIR}/include/CameraModels
+  ${EIGEN3_INCLUDE_DIR}
+  ${Pangolin_INCLUDE_DIRS}
 )
 
 
@@ -194,3 +166,8 @@ add_executable(stereo_inertial_tum_vi
 Examples/Stereo-Inertial/stereo_inertial_tum_vi.cc)
 target_link_libraries(stereo_inertial_tum_vi ${PROJECT_NAME})
 
+find_package(roscpp REQUIRED)
+
+if(roscpp_FOUND)
+  add_subdirectory(Examples/ROS/ORB_SLAM3)
+endif()
